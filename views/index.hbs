@@ -1,2 +1,9 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<p>{{data.title}}</p>
+
+<div>
+    <p>Searching <strong>{{data.options.url}}</strong> for <i>{{data.options.searchTerm}}</i> </p>
+    {{#each data.results as |result|}}
+        <hr />
+        {{{result}}}
+    {{/each}}
+</div>
