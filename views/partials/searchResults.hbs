@@ -1,16 +1,16 @@
-<div class="row">
-    <ul>
+<div class="container-fluid">
+    <div class="row">
         {{#each data.results as |item|}}
-        <li>
+        <div class="row">
             <p>Found <span style="color:crimson">{{item.count}}</span> Results on <strong>{{item.url}}</strong> for <i>{{data.options.searchTerm}}</i> </p>
             <hr />
-            <div class="searchResult d-flex flex-column">
+            <div class="container d-flex flex-column">
                 {{#each item.results as |result|}}
                     {{#> searchResultItem result=result}}
                     {{/searchResultItem}}
                 {{/each}}
             </div>
-        </li>
+        </div>
         {{/each}}
-    </ul>
+    </div>
 </div>
