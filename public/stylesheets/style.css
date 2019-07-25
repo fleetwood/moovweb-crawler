@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+
+.search-item {
+  background: rgba(100,100,100,0.05);
+  border: solid 1px rgba(100,100,100,0.3);
+  border-radius: 3px;
+  margin: 0.5em;
+  padding: 0.5em;
+  list-style-type: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

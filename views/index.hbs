@@ -1,9 +1,87 @@
 <p>{{data.title}}</p>
+<form>
+    <div class="form-group d-flex">
+        <div>
+            <label for="searchUrl">Site</label>
+            <input type="text" class="form-control" id="searchUrl" aria-describedby="searchUrlHelp"
+                placeholder="Ex: http://www.apple.com" value="http://www.apple.com">
+            <small id="searchUrlHelp" class="form-text text-muted">Site to search against</small>
+        </div>
+        <div>
+            <label for="searchTerm">Search term</label>
+            <input type="text" class="form-control" id="searchTerm" aria-describedby="termHelp"
+                placeholder="Search term" value="wow">
+            <small id="termHelp" class="form-text text-muted">Enter a search term.</small>
+        </div>
 
-<div>
-    <p>Searching <strong>{{data.options.url}}</strong> for <i>{{data.options.searchTerm}}</i> </p>
-    {{#each data.results as |result|}}
-        <hr />
-        {{{result}}}
-    {{/each}}
-</div>
+        <div>
+            <label for="searchDepth">Search depth</label>
+            <select class="form-control" id="searchDepth">
+                <option selected>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="searchPages">Total pages</label>
+            <select class="form-control" id="searchPages">
+                <option selected>1</option>
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>100</option>
+            </select>
+        </div>
+
+    </div>
+
+    <button id="submit" class="btn btn-primary" data-hidden="false">Submit</button>
+</form>
+<br />
+<div id="loader" data-hidden="true" class="d-none">Loading....</div>
+<div id="searchResultContainer" data-hidden="false"></div>
+
+<script>
+    $(document).ready(() => {
+        const render = (content) => {
+            {{!-- toggleHidden(); --}}
+            $('#searchResultContainer').html(content);
+        }
+
+        const toggleHidden = (show) => {
+            let hidden = 'data-hidden';
+            $(`[${hidden}]`).each(function(i) {
+                let a = $(this);
+                a.attr(hidden, !a.attr(hidden));
+                if (a.attr(hidden)) {
+                    a.addClass('d-none');
+                }
+                else {
+                    a.removeClass('d-none');
+                }
+            })
+        }
+
+        $('#submit').click(e => {
+            e.preventDefault();
+            {{!-- toggleHidden(); --}}
+            let data = {
+                url: $('#searchUrl').val(),
+                searchTerm: $('#searchTerm').val(),
+                depth: $("#searchDepth").val(),
+                pages: $('#searchPages').val()
+            };
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data,
+                error: (err) => render(err),
+                success: (result) => render(result)
+            });
+        })
+    })
+</script>
